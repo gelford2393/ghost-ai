@@ -14,7 +14,7 @@ Requirements:
 - right empty for now
 - dark background with subtle bottom border
 
-###Project Sidebar
+### Project Sidebar
 
 Create `components/editor/project-sidebar.tsx`.
 

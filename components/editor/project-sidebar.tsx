@@ -13,13 +13,14 @@ interface ProjectSidebarProps {
 export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
   return (
     <aside
+     aria-hidden={!isOpen}
       className={`
         absolute inset-y-0 left-0 z-40 w-72
         flex flex-col
         bg-card/95 backdrop-blur-sm
         border-r border-border
         transition-transform duration-300 ease-in-out
-        ${isOpen ? "translate-x-0" : "-translate-x-full"}
+         ${isOpen ? "translate-x-0" : "-translate-x-full invisible pointer-events-none"}
       `}
     >
       {/* Header */}
