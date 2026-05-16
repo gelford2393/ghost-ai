@@ -42,7 +42,7 @@ Use existing Clerk env vars. Do not rename, modify, or add new ones.
 
 ## Dependencies
 
-install: @clerk/ui.
+Install: `@clerk/nextjs`, `@clerk/themes`, `@clerk/ui`.
 
 ## Check when done:
 
