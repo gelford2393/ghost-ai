@@ -28,13 +28,13 @@ export default function EditorPage() {
   } = useProjectDialogs();
 
   return (
-    <div className="min-h-dvh flex flex-col bg-background">
+    <div className="h-dvh flex flex-col bg-background">
       <EditorNavbar
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
       />
 
-      <div className="flex-1 relative overflow-hidden">
+      <div className="flex-1 relative overflow-hidden flex flex-col">
         <ProjectSidebar
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}

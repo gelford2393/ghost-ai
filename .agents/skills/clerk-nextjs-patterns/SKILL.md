@@ -88,8 +88,8 @@ import { Show } from '@clerk/nextjs'
 | Cache returns wrong user's data | Missing userId in key | Include `userId` in `unstable_cache` key |
 | Mutations bypass auth | Unprotected Server Action | Check `auth()` at start of action |
 | Wrong HTTP error code | Confused 401/403 | 401 = not signed in, 403 = no permission |
-## Session Tokens & Custom JWTs
 
+## Session Tokens & Custom JWTs
 ### getToken() for external APIs
 
 Pass a custom JWT to third-party services (Hasura, Supabase, etc.) using JWT templates defined in the Clerk dashboard.
