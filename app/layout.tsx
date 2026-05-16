@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/ui/themes";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -23,11 +25,40 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+    <ClerkProvider
+      appearance={{
+        theme: dark,
+        variables: {
+          colorPrimary: "#FFA000",
+          colorBackground: "#111114",
+          colorInputBackground: "#18181c",
+          colorText: "#f0f0f4",
+          colorTextSecondary: "#c0c0cc",
+          colorNeutral: "#808090",
+          borderRadius: "0.5rem",
+        },
+        elements: {
+          rootBox: "w-full max-w-[400px]",
+          card: "w-full shadow-none bg-transparent",
+          footerActionLink: "!text-[#FFA000] hover:!text-[#FFA000]/80",
+          socialButtonsBlockButton:
+            "!border-[#2a2a30] !bg-[#18181c] !text-[#f0f0f4] hover:!bg-[#1e1e23]",
+          dividerLine: "!bg-[#2a2a30]",
+          dividerText: "!text-[#808090]",
+          formFieldLabel: "!text-[#c0c0cc]",
+          formFieldInput:
+            "!bg-[#18181c] !border-[#2a2a30] !text-[#f0f0f4] focus:!border-[#FFA000]",
+          headerTitle: "!text-[#f0f0f4]",
+          headerSubtitle: "!text-[#c0c0cc]",
+        },
+      }}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
-    </html>
+      <html
+        lang="en"
+        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      >
+        <body className="min-h-full flex flex-col">{children}</body>
+      </html>
+    </ClerkProvider>
   );
 }
