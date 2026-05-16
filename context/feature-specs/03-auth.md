@@ -21,7 +21,7 @@ Keep the layout minimal and professional
 
 ## Implementation
 
-Wrap the root layout with `ClerkProvider`using Clerk's `dark`theme
+Wrap the root layout with `ClerkProvider` using Clerk's `dark` theme
 
 Create sign-in and sign-up pages using Clerk components
 
