@@ -25,7 +25,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Next Up
 
-## Next Up
+- Begin Phase 3 — Database Integration (wiring the UI to use the new APIs).
 
 - Begin Phase 3 — Database Integration (wiring the UI to use the new APIs).
 
