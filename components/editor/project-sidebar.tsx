@@ -32,8 +32,7 @@ function ProjectItem({
       <span className="flex-1 truncate">{project.name}</span>
 
       {showActions && (
-        <div className="flex items-center gap-0.5 shrink-0 opacity-100 md:opacity-0 md:group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
-          <Button
+        <div className="flex items-center gap-0.5 shrink-0 opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 transition-opacity">          <Button
             variant="ghost"
             size="icon-xs"
             onClick={(e) => {

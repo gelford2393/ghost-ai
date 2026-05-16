@@ -20,11 +20,14 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## In Progress
 
-- `05-prisma.md`: Adding `Project` and `ProjectCollaborator` models, setting up `lib/prisma.ts` client with branch support for Accelerate and Direct Postgres, and generating first migrations.
+- `05-prisma.md`: Added `Project` and `ProjectCollaborator` models, set up `lib/prisma.ts` client with branch support for Accelerate and Direct Postgres, resolved union type errors with `.findUnique` by calling `$extends(withAccelerate())` uniformly, and generated first migrations.
+- `06-project-apis.md`: Built the backend API routes (`GET /api/projects`, `POST /api/projects`, `PATCH /api/projects/[projectId]`, `DELETE /api/projects/[projectId]`) using Next.js Route Handlers, Prisma, and `@clerk/nextjs` auth. Enforced security rules (401 unauthenticated, 403 non-owner mutation).
 
 ## Next Up
 
-- Add the next planned feature unit here.
+## Next Up
+
+- Begin Phase 3 — Database Integration (wiring the UI to use the new APIs).
 
 ## Open Questions
 
