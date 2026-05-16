@@ -8,12 +8,13 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Implement Editor Chrome (`02-editor.md`)
+- Implement Auth Feature (`03-auth.md`)
 
 ## Completed
 
 - `01-design-system.md`: shadcn/ui initialized (Tailwind v4), all 7 UI primitives installed (Button, Input, Label, Card, Tabs, ScrollArea, Dialog), `lib/utils.ts` with `cn()` created, `lucide-react` installed, dark mode enforced via `dark` class on `<html>`. Build passes with zero errors.
 - `02-editor.md`: Editor navbar (`components/editor/editor-navbar.tsx`) and project sidebar (`components/editor/project-sidebar.tsx`) created. Navbar has left/center/right sections with sidebar toggle (PanelLeftOpen/PanelLeftClose), project title + save status. Sidebar floats above content (absolute + translate-x animation), has Projects header + close button, shadcn Tabs (My Projects / Shared) with empty placeholder states, and full-width New Project button with Plus icon. Dialog pattern ready via shadcn Dialog component (supports title, description, footer actions). Build passes with zero errors.
+- `03-auth.md`: Integrated `@clerk/nextjs` with `@clerk/themes`. Redesigned auth layout to match professional two-panel design: top-left logo, bold left-aligned headlines, and product feature rows with brand-accented icon badges. Aligned entire app to a Firebase orange brand accent (`#FFA000`) by wiring it into the shadcn `--primary` token and Ghost AI `--accent-primary` tokens. Clerk components, buttons, tabs, and focus states now use the unified brand identity. **Fixed mobile view by adding a condensed branding header and ensuring Clerk forms are responsive.** Build passes with zero errors.
 
 ## In Progress
 
