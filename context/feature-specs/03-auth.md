@@ -21,7 +21,7 @@ Keep the layout minimal and professional
 
 ## Implementation
 
-Wrap the root layout with `ClerkProvider`using Clerk's `dark`theme
+Wrap the root layout with `ClerkProvider` using Clerk's `dark` theme
 
 Create sign-in and sign-up pages using Clerk components
 
@@ -42,7 +42,7 @@ Use existing Clerk env vars. Do not rename, modify, or add new ones.
 
 ## Dependencies
 
-install: @clerk/ui.
+Install: `@clerk/nextjs`, `@clerk/themes`, `@clerk/ui`.
 
 ## Check when done:
 
