@@ -47,7 +47,7 @@ DATABASE_URL="sqlserver://localhost:1433;database=mydb;user=sa;password=Password
 
 ### Connection String Format
 
-```
+```text
 sqlserver://HOST:PORT;database=DB;user=USER;password=PASS;encrypt=true;trustServerCertificate=true
 ```
 

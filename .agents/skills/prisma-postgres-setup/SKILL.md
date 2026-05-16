@@ -137,7 +137,7 @@ All five packages are required:
 
 2. Write the direct connection string to `.env`. **Append** to the file if it already exists — do not overwrite existing entries:
 
-```
+```dotenv
 DATABASE_URL="<direct-connection-string>"
 ```
 
@@ -255,7 +255,7 @@ Read `references/api-basics.md` for the full error reference. Key self-correctio
 
 Detailed API and usage information is in:
 
-```
+```text
 references/auth.md             — Service token creation and usage
 references/api-basics.md       — Base URL, envelope, IDs, errors, pagination
 references/endpoints.md        — Endpoint details for projects, databases, connections, regions

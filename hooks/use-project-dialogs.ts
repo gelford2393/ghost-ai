@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
 
 export interface MockProject {
   id: string;
@@ -35,6 +35,7 @@ const INITIAL_MOCK_PROJECTS: MockProject[] = [
 ];
 
 export function useProjectDialogs() {
+  const pendingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [projects, setProjects] = useState<MockProject[]>(INITIAL_MOCK_PROJECTS);
   const [dialog, setDialog] = useState<DialogState>({ type: null, targetProject: null });
   const [projectName, setProjectName] = useState("");
@@ -69,6 +70,10 @@ export function useProjectDialogs() {
   }, []);
 
   const closeDialog = useCallback(() => {
+    if (pendingTimerRef.current) {
+      clearTimeout(pendingTimerRef.current);
+      pendingTimerRef.current = null;
+    }
     setDialog({ type: null, targetProject: null });
     setProjectName("");
     setIsLoading(false);
@@ -81,7 +86,7 @@ export function useProjectDialogs() {
     setIsLoading(true);
 
     // Simulate async work
-    setTimeout(() => {
+    pendingTimerRef.current = setTimeout(() => {
       const newProject: MockProject = {
         id: crypto.randomUUID(),
         name: projectName.trim(),
@@ -99,7 +104,7 @@ export function useProjectDialogs() {
     if (!projectName.trim() || !dialog.targetProject) return;
     setIsLoading(true);
 
-    setTimeout(() => {
+    pendingTimerRef.current = setTimeout(() => {
       setProjects((prev) =>
         prev.map((p) =>
           p.id === dialog.targetProject!.id
@@ -117,7 +122,7 @@ export function useProjectDialogs() {
     if (!dialog.targetProject) return;
     setIsLoading(true);
 
-    setTimeout(() => {
+    pendingTimerRef.current = setTimeout(() => {
       setProjects((prev) => prev.filter((p) => p.id !== dialog.targetProject!.id));
       setDialog({ type: null, targetProject: null });
       setIsLoading(false);

@@ -13,7 +13,7 @@ This skill provides everything needed to implement a Prisma ORM v7 driver adapte
 
 ## Architecture Overview
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │                         PrismaClient                            │
 │                    (requires adapter factory)                   │

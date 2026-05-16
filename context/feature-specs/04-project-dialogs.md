@@ -4,7 +4,7 @@ Build the `/editor` home screen and add project dialogs/sidebar actions. No API 
 
 ## Editor Home
 
-Reuse the existing editor layout. Do not modify the navbar or sidebar behavior.
+Reuse the existing editor layout; do not change navbar or sidebar structure — you may add project actions and mobile scrim/interaction behavior only. *(Note: Sidebar structure must remain, but project action buttons and mobile scrim behavior as detailed in the Sidebar section below are allowed).*
 
 In the center of the page, add:
 

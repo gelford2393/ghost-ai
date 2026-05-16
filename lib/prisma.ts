@@ -6,7 +6,11 @@ import pg from 'pg';
 const connectionString = process.env.DATABASE_URL;
 
 const prismaClientSingleton = () => {
-  if (connectionString?.startsWith('prisma+postgres://')) {
+  if (!connectionString) {
+    throw new Error('DATABASE_URL is required');
+  }
+
+  if (connectionString.startsWith('prisma+postgres://')) {
     // When using Prisma Accelerate, we don't pass the pg adapter
     return new PrismaClient({
       accelerateUrl: connectionString,
