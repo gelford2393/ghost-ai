@@ -33,7 +33,12 @@ export async function verifyProjectAccess(roomId: string): Promise<AccessStatus>
   const userEmail =
     user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress
     ?? user.emailAddresses[0]?.emailAddress;
-  const isCollaborator = project.collaborators.some((c) => c.email === userEmail);
+  const normalizedUserEmail = userEmail?.trim().toLowerCase();
+  const isCollaborator =
+    !!normalizedUserEmail &&
+    project.collaborators.some(
+      (c) => c.email.trim().toLowerCase() === normalizedUserEmail
+    );
 
   if (isCollaborator) {
     const { collaborators, ...projectWithoutRelations } = project;
