@@ -43,7 +43,10 @@ export function useProjectActions() {
   const slug = useMemo(() => {
     if (!projectName.trim()) return "";
     const baseSlug = generateSlug(projectName);
-    return suffix ? `${baseSlug}-${suffix}` : baseSlug;
+    if (baseSlug) {
+      return suffix ? `${baseSlug}-${suffix}` : baseSlug;
+    }
+    return suffix;
   }, [projectName, suffix]);
 
   const openCreate = useCallback(() => {

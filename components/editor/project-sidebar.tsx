@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { Project } from "@/hooks/use-project-actions";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface ProjectSidebarProps {
   isOpen: boolean;
@@ -14,6 +16,7 @@ interface ProjectSidebarProps {
   onNewProject: () => void;
   onRename: (project: Project) => void;
   onDelete: (project: Project) => void;
+  activeProjectId?: string;
 }
 
 /**
@@ -31,14 +34,22 @@ function ProjectItem({
   showActions,
   onRename,
   onDelete,
+  isActive,
 }: {
   project: Project;
   showActions: boolean;
   onRename: (project: Project) => void;
   onDelete: (project: Project) => void;
+  isActive?: boolean;
 }) {
   return (
-    <div className="group flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-foreground hover:bg-muted/50 transition-colors">
+    <Link 
+      href={`/editor/${project.id}`}
+      className={cn(
+        "group flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-foreground transition-colors",
+        isActive ? "bg-muted" : "hover:bg-muted/50"
+      )}
+    >
       <span className="flex-1 truncate">{project.name}</span>
 
       {showActions && (
@@ -46,6 +57,7 @@ function ProjectItem({
             variant="ghost"
             size="icon-xs"
             onClick={(e) => {
+              e.preventDefault();
               e.stopPropagation();
               onRename(project);
             }}
@@ -57,6 +69,7 @@ function ProjectItem({
             variant="ghost"
             size="icon-xs"
             onClick={(e) => {
+              e.preventDefault();
               e.stopPropagation();
               onDelete(project);
             }}
@@ -67,7 +80,7 @@ function ProjectItem({
           </Button>
         </div>
       )}
-    </div>
+    </Link>
   );
 }
 
@@ -93,6 +106,7 @@ export function ProjectSidebar({
   onNewProject,
   onRename,
   onDelete,
+  activeProjectId,
 }: ProjectSidebarProps) {
   return (
     <>
@@ -160,6 +174,7 @@ export function ProjectSidebar({
                       showActions={true}
                       onRename={onRename}
                       onDelete={onDelete}
+                      isActive={project.id === activeProjectId}
                     />
                   ))}
                 </div>
@@ -186,6 +201,7 @@ export function ProjectSidebar({
                       showActions={false}
                       onRename={onRename}
                       onDelete={onDelete}
+                      isActive={project.id === activeProjectId}
                     />
                   ))}
                 </div>

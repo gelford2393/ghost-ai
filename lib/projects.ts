@@ -9,7 +9,9 @@ export async function getProjects() {
     return { owned: [], shared: [] };
   }
 
-  const userEmail = user.emailAddresses[0]?.emailAddress;
+  const userEmail =
+    user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress
+    ?? user.emailAddresses[0]?.emailAddress;
 
   // Fetch owned projects
   const owned = await prisma.project.findMany({
