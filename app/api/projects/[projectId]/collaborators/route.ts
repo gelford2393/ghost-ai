@@ -61,16 +61,16 @@ export async function GET(
 
     // Verify permission: User must be either the owner or a collaborator
     const isOwner = projectWithRelations.ownerId === userId;
-    const userEmail =
-      user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress ??
-      user.emailAddresses[0]?.emailAddress;
+    const userEmails = user.emailAddresses
+      .map((e) => e.emailAddress?.toLowerCase())
+      .filter((email): email is string => !!email);
 
-    if (!userEmail) {
+    if (userEmails.length === 0) {
       return new NextResponse('User email not found', { status: 400 });
     }
 
-    const isCollaborator = projectWithRelations.collaborators.some(
-      (c) => c.email.toLowerCase() === userEmail.toLowerCase()
+    const isCollaborator = projectWithRelations.collaborators.some((c) =>
+      userEmails.includes(c.email.toLowerCase())
     );
 
     if (!isOwner && !isCollaborator) {

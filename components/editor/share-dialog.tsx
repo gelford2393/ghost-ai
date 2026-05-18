@@ -33,6 +33,12 @@ interface ShareDialogProps {
   userRole: "owner" | "collaborator";
 }
 
+function getErrorMessage(err: unknown, defaultMessage = "Something went wrong"): string {
+  if (err instanceof Error) return err.message;
+  if (typeof err === "string") return err;
+  return defaultMessage;
+}
+
 export function ShareDialog({
   isOpen,
   onClose,
@@ -65,9 +71,9 @@ export function ShareDialog({
       const data: ShareResponse = await res.json();
       setOwner(data.owner);
       setCollaborators(data.collaborators);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setErrorMsg(err.message || "An error occurred while fetching collaborators.");
+      setErrorMsg(getErrorMessage(err, "An error occurred while fetching collaborators."));
     } finally {
       setIsLoading(false);
     }
@@ -119,8 +125,8 @@ export function ShareDialog({
       
       // Refresh list
       await fetchCollaborators();
-    } catch (err: any) {
-      setErrorMsg(err.message || "Something went wrong.");
+    } catch (err: unknown) {
+      setErrorMsg(getErrorMessage(err, "Something went wrong."));
     } finally {
       setIsSubmitting(false);
     }
@@ -147,8 +153,8 @@ export function ShareDialog({
       
       // Refresh list
       await fetchCollaborators();
-    } catch (err: any) {
-      setErrorMsg(err.message || "Something went wrong.");
+    } catch (err: unknown) {
+      setErrorMsg(getErrorMessage(err, "Something went wrong."));
     } finally {
       setRemovingId(null);
     }
