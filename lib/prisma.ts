@@ -19,7 +19,7 @@ const prismaClientSingleton = () => {
     // For direct postgres connection, we use the driver adapter
     const pool = new pg.Pool({ connectionString });
     const adapter = new PrismaPg(pool);
-    return new PrismaClient({ adapter });
+    return new PrismaClient({ adapter }).$extends(withAccelerate());
   }
 };
 

@@ -1,67 +1,31 @@
-"use client";
+import { getProjects } from "@/lib/projects";
+import { EditorClient } from "@/components/editor/editor-client";
 
-import { useState } from "react";
-import { EditorNavbar } from "@/components/editor/editor-navbar";
-import { ProjectSidebar } from "@/components/editor/project-sidebar";
-import { EditorHome } from "@/components/editor/editor-home";
-import { ProjectDialogs } from "@/components/editor/project-dialogs";
-import { useProjectDialogs } from "@/hooks/use-project-dialogs";
+export const dynamic = "force-dynamic";
 
-export default function EditorPage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+export default async function EditorPage() {
+  const { owned, shared } = await getProjects();
 
-  const {
-    ownedProjects,
-    sharedProjects,
-    dialog,
-    projectName,
-    setProjectName,
-    slug,
-    isLoading,
-    openCreate,
-    openRename,
-    openDelete,
-    closeDialog,
-    submitCreate,
-    submitRename,
-    submitDelete,
-  } = useProjectDialogs();
+  // Serialize Date objects to ISO strings to ensure clean transport to Client Components
+  const serializedOwned = owned.map((p) => ({
+    id: p.id,
+    name: p.name,
+    ownerId: p.ownerId,
+    createdAt: p.createdAt.toISOString(),
+  }));
+
+  const serializedShared = shared.map((p) => ({
+    id: p.id,
+    name: p.name,
+    ownerId: p.ownerId,
+    createdAt: p.createdAt.toISOString(),
+  }));
 
   return (
-    <div className="h-dvh flex flex-col bg-background">
-      <EditorNavbar
-        isSidebarOpen={isSidebarOpen}
-        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-      />
-
-      <div className="flex-1 relative overflow-hidden flex flex-col">
-        <ProjectSidebar
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
-          ownedProjects={ownedProjects}
-          sharedProjects={sharedProjects}
-          onNewProject={openCreate}
-          onRename={openRename}
-          onDelete={openDelete}
-        />
-
-        {/* Editor home — center content */}
-        <EditorHome onNewProject={openCreate} />
-      </div>
-
-      {/* ── Dialogs ── */}
-      <ProjectDialogs
-        dialogType={dialog.type}
-        project={dialog.targetProject}
-        projectName={projectName}
-        slug={slug}
-        isLoading={isLoading}
-        onProjectNameChange={setProjectName}
-        onSubmitCreate={submitCreate}
-        onSubmitRename={submitRename}
-        onSubmitDelete={submitDelete}
-        onClose={closeDialog}
-      />
-    </div>
+    <EditorClient
+      initialOwnedProjects={serializedOwned}
+      initialSharedProjects={serializedShared}
+    />
   );
 }
+
