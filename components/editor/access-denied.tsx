@@ -13,7 +13,7 @@ export function AccessDenied() {
           Access Denied
         </h1>
         <p className="text-sm text-muted-foreground">
-          You don't have permission to access this project, or it may not exist.
+          You don&apos;t have permission to access this project, or it may not exist.
         </p>
         <Link href="/editor" className={buttonVariants({ variant: 'default', className: 'mt-4' })}>
           Return to Editor
