@@ -26,32 +26,40 @@ export async function PATCH(
       return new NextResponse('Invalid JSON', { status: 400 });
     }
 
-    const { name } = body;
+    const name =
+      typeof body === 'object' && body !== null && 'name' in body
+        ? (body as { name?: unknown }).name
+        : undefined;
 
-    if (!name || name.trim() === '') {
+    if (typeof name !== 'string' || name.trim() === '') {
       return new NextResponse('Name is required', { status: 400 });
     }
 
-    const project = await prisma.project.findUnique({
+    const result = await prisma.project.updateMany({
       where: {
         id: projectId,
-      },
-    });
-
-    if (!project) {
-      return new NextResponse('Not Found', { status: 404 });
-    }
-
-    if (project.ownerId !== userId) {
-      return new NextResponse('Forbidden', { status: 403 });
-    }
-
-    const updatedProject = await prisma.project.update({
-      where: {
-        id: projectId,
+        ownerId: userId,
       },
       data: {
         name: name.trim(),
+      },
+    });
+
+    if (result.count === 0) {
+      const project = await prisma.project.findUnique({
+        where: { id: projectId },
+      });
+
+      if (!project) {
+        return new NextResponse('Not Found', { status: 404 });
+      }
+
+      return new NextResponse('Forbidden', { status: 403 });
+    }
+
+    const updatedProject = await prisma.project.findUnique({
+      where: {
+        id: projectId,
       },
     });
 
@@ -79,27 +87,26 @@ export async function DELETE(
       return new NextResponse('Project ID is required', { status: 400 });
     }
 
-    const project = await prisma.project.findUnique({
+    const result = await prisma.project.deleteMany({
       where: {
         id: projectId,
+        ownerId: userId,
       },
     });
 
-    if (!project) {
-      return new NextResponse('Not Found', { status: 404 });
-    }
+    if (result.count === 0) {
+      const project = await prisma.project.findUnique({
+        where: { id: projectId },
+      });
 
-    if (project.ownerId !== userId) {
+      if (!project) {
+        return new NextResponse('Not Found', { status: 404 });
+      }
+
       return new NextResponse('Forbidden', { status: 403 });
     }
 
-    const deletedProject = await prisma.project.delete({
-      where: {
-        id: projectId,
-      },
-    });
-
-    return NextResponse.json(deletedProject);
+    return NextResponse.json({ id: projectId });
   } catch (error) {
     console.error('[PROJECT_DELETE]', error);
     return new NextResponse('Internal Error', { status: 500 });

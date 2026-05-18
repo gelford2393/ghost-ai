@@ -34,14 +34,27 @@ export async function POST(req: NextRequest) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    let body = {};
-    try {
-      body = await req.json();
-    } catch {
-      // It's okay if body is empty or invalid JSON
+    const rawBody = await req.text();
+    let body: any = {};
+
+    if (rawBody.trim() !== '') {
+      try {
+        body = JSON.parse(rawBody);
+      } catch {
+        return new NextResponse('Invalid JSON', { status: 400 });
+      }
     }
 
-    const { name } = body as { name?: string };
+    if (typeof body !== 'object' || body === null || Array.isArray(body)) {
+      return new NextResponse('Invalid request body', { status: 400 });
+    }
+
+    const { name } = body;
+
+    if (name !== undefined && typeof name !== 'string') {
+      return new NextResponse("Invalid 'name' type", { status: 400 });
+    }
+
     const projectName = name && name.trim() !== '' ? name.trim() : 'Untitled Project';
 
     const project = await prisma.project.create({
