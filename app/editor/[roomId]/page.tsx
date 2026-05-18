@@ -47,6 +47,7 @@ export default async function WorkspacePage({ params }: WorkspacePageProps) {
     <WorkspaceClient
       projectId={project.id}
       projectName={project.name}
+      userRole={accessResult.role}
       initialOwnedProjects={serializedOwned}
       initialSharedProjects={serializedShared}
     />
