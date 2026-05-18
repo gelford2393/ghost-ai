@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import prisma from '@/lib/prisma';
 
+/**
+ * Retrieves a list of projects owned by the authenticated user.
+ * 
+ * @param req - The incoming Next.js request object.
+ * @returns A JSON response containing the user's projects ordered by creation date, or an error status.
+ */
 export async function GET(req: NextRequest) {
   try {
     const { userId } = await auth();
@@ -26,6 +32,12 @@ export async function GET(req: NextRequest) {
   }
 }
 
+/**
+ * Creates a new project for the authenticated user.
+ * 
+ * @param req - The incoming Next.js request object containing the project details (e.g., name).
+ * @returns A JSON response containing the newly created project, or an error status.
+ */
 export async function POST(req: NextRequest) {
   try {
     const { userId } = await auth();
@@ -35,7 +47,7 @@ export async function POST(req: NextRequest) {
     }
 
     const rawBody = await req.text();
-    let body: any = {};
+    let body: unknown = {};
 
     if (rawBody.trim() !== '') {
       try {
@@ -49,7 +61,7 @@ export async function POST(req: NextRequest) {
       return new NextResponse('Invalid request body', { status: 400 });
     }
 
-    const { name } = body;
+    const name = 'name' in body ? (body as { name?: unknown }).name : undefined;
 
     if (name !== undefined && typeof name !== 'string') {
       return new NextResponse("Invalid 'name' type", { status: 400 });

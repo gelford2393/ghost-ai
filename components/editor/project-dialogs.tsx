@@ -11,11 +11,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import type { MockProject } from "@/hooks/use-project-dialogs";
+import type { Project } from "@/hooks/use-project-actions";
 
 interface ProjectDialogsProps {
   dialogType: "create" | "rename" | "delete" | null;
-  project: MockProject | null;
+  project: Project | null;
   projectName: string;
   slug: string;
   isLoading: boolean;

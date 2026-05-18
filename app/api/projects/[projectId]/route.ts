@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import prisma from '@/lib/prisma';
 
+/**
+ * Updates an existing project's details (e.g., name).
+ * 
+ * @param req - The incoming Next.js request object containing the updated fields.
+ * @param context - An object containing the route parameters, including the projectId.
+ * @param context.params - A promise that resolves to the route parameters.
+ * @returns A JSON response containing the updated project, or an error status.
+ */
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ projectId: string }> }
@@ -63,6 +71,10 @@ export async function PATCH(
       },
     });
 
+    if (!updatedProject) {
+      return new NextResponse('Not Found', { status: 404 });
+    }
+
     return NextResponse.json(updatedProject);
   } catch (error) {
     console.error('[PROJECT_PATCH]', error);
@@ -70,6 +82,14 @@ export async function PATCH(
   }
 }
 
+/**
+ * Deletes a specific project owned by the authenticated user.
+ * 
+ * @param req - The incoming Next.js request object.
+ * @param context - An object containing the route parameters, including the projectId.
+ * @param context.params - A promise that resolves to the route parameters.
+ * @returns A JSON response confirming deletion with the projectId, or an error status.
+ */
 export async function DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ projectId: string }> }
